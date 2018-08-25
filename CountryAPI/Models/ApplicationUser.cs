@@ -8,6 +8,5 @@ namespace CountryAPI.Models
 {
     public class ApplicationUser : IdentityUser
     {
-
     }
 }

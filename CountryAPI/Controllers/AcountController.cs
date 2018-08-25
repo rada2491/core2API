@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WebApiPaises.Controllers
 {
@@ -21,15 +22,26 @@ namespace WebApiPaises.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private ApplicationDbContext _app;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ApplicationDbContext app)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this._configuration = configuration;
+            _app = app;
+        }
+
+        [HttpGet]
+        public IEnumerable<IdentityUser> getAll()
+        {
+            Console.Write(_app.Users.ToList());
+            return _app.Users.ToList();
+            
         }
 
         [Route("Create")]
